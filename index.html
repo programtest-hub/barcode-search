@@ -59,7 +59,7 @@ button{
 
 <input
 id="barcode"
-placeholder="バーコード番号">
+placeholder="蓋裏シール番号">
 
 <button onclick="searchData()">
 検索
@@ -80,7 +80,7 @@ async function searchData(){
         .value.trim();
 
     if(barcode==""){
-        alert("バーコードを入力してください");
+        alert("蓋裏シール番号を入力してください");
         return;
     }
 
@@ -117,7 +117,7 @@ async function searchData(){
         document.getElementById("result").innerHTML=`
         <div class="result">
 
-        <h3>蓋裏シール</h3>
+        <h3>バーコード番号</h3>
         <div class="value">
         ${found.c[1]?.v ?? ""}
         </div>
