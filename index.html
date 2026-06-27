@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+    font-family: Arial;
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+    background:#f4f4f4;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 2px 5px rgba(0,0,0,.2);
+}
+
+input{
+    width:100%;
+    box-sizing:border-box;
+    padding:15px;
+    font-size:24px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    margin-top:20px;
+    font-size:24px;
+}
+
+.result{
+    margin-top:20px;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+}
+
+.value{
+    font-size:32px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>商品検索</h1>
+
+<div class="card">
+
+<input
+id="barcode"
+placeholder="バーコード番号">
+
+<button onclick="searchData()">
+検索
+</button>
+
+</div>
+
+<div id="result"></div>
+
+<script>
+
+const SHEET_ID="YOUR_SHEET_ID";
+
+async function searchData(){
+
+    let barcode=
+        document.getElementById("barcode")
+        .value.trim();
+
+    if(barcode==""){
+        alert("バーコードを入力してください");
+        return;
+    }
+
+    document.getElementById("result").innerHTML=
+    "検索中...";
+
+    const url=
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+
+    let response=await fetch(url);
+    let text=await response.text();
+
+    let json=JSON.parse(
+      text.substring(47).slice(0,-2)
+    );
+
+    let rows=json.table.rows;
+
+    let found=null;
+
+    for(let row of rows){
+
+        if(row.c[0] &&
+           row.c[0].v==barcode){
+
+            found=row;
+            break;
+        }
+
+    }
+
+    if(found){
+
+        document.getElementById("result").innerHTML=`
+        <div class="result">
+
+        <h3>蓋裏シール</h3>
+        <div class="value">
+        ${found.c[1]?.v ?? ""}
+        </div>
+
+        <h3>仕入金額</h3>
+        <div class="value">
+        ${found.c[2]?.v ?? ""}
+        </div>
+
+        </div>
+        `;
+
+    }else{
+
+        document.getElementById("result").innerHTML=
+        "<div class='result'>商品が見つかりません</div>";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
