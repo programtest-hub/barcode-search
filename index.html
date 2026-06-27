@@ -58,7 +58,7 @@ button{
 <div class="card">
 
 <input
-id="barcode"
+id="labelcode"
 placeholder="蓋裏シール番号">
 
 <button onclick="searchData()">
@@ -71,15 +71,15 @@ placeholder="蓋裏シール番号">
 
 <script>
 
-const SHEET_ID="YOUR_SHEET_ID";
+const SHEET_ID="1gzmJQdi8Rkbm3EmQqrH5VSN9_llI9b65eETBSUlt3d0";
 
 async function searchData(){
 
-    let barcode=
-        document.getElementById("barcode")
+    let labelcode=
+        document.getElementById("labelcode")
         .value.trim();
 
-    if(barcode==""){
+    if(labelcode==""){
         alert("蓋裏シール番号を入力してください");
         return;
     }
@@ -104,7 +104,7 @@ async function searchData(){
     for(let row of rows){
 
         if(row.c[0] &&
-           row.c[0].v==barcode){
+           row.c[0].v==labelcode){
 
             found=row;
             break;
