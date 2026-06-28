@@ -61,7 +61,7 @@ button{
 type="number"
 id="labelcode"
 inputmode="numeric"
-placeholder="蓋裏シール番号">
+placeholder="裏蓋シール番号">
 
 <button onclick="searchData()">
 検索
@@ -82,7 +82,7 @@ async function searchData(){
         .value.trim();
 
     if(labelcode==""){
-        alert("蓋裏シール番号を入力してください");
+        alert("裏蓋シール番号を入力してください");
         return;
     }
 
@@ -124,7 +124,7 @@ async function searchData(){
         ${found.c[1]?.v ?? ""}
         </div>
 
-        <h3>仕入金額</h3>
+        <h3>反転前数値</h3>
         <div class="value">
         ${found.c[2]?.v ?? ""}
         </div>
